@@ -1,0 +1,38 @@
+{% extends 'nbadmin/index.html' %}
+{% block right_content %}
+    {% load nbadmin_tag %}
+    {% if admin_class.list_filter %}
+    <form action="">
+        {% for filter_column in admin_class.list_filter %}
+            {% build_filter_row filter_column admin_class%}
+        {% endfor %}
+        <input type="submit" value="过滤">
+    </form>
+    {% endif %}
+        <table class="table table-striped">
+        <thead>
+        {% if admin_class.list_display %}
+        <tr>
+        {% for column_name in admin_class.list_display %}
+            <th><a href="?_o={{ forloop.counter0 }}">{{ column_name}}</a></th>
+        {% endfor %}
+        </tr>
+            {% else %}
+            <tr><th> {{ admin_class.models_name }}</th></tr>
+         {% endif %}
+        </thead>
+        <tbody>
+        {% for per_obj in models_obj %}
+            <tr>
+            {% build_table_row per_obj admin_class %}
+            </tr>
+        {% endfor %}
+        </tbody>
+</table>
+    <nav aria-label="...">
+  <ul class="pagination">
+        {{ page_str }}
+  </ul>
+</nav>
+
+{% endblock %}

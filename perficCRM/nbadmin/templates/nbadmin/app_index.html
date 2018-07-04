@@ -1,0 +1,17 @@
+{% extends 'nbadmin/index.html' %}
+{% block right_content %}
+    {% for app_name,app_tables in site.enabled_admins.items %}
+        <table class="table table-striped">
+        <thead>
+        <tr><th>{{ app_name }}</th></tr>
+        </thead>
+        <tbody>
+        {% for models_name in app_tables %}
+             <tr><td><a href="{% url 'table_obj_list' app_name models_name %}">{{ models_name }}</a></td>
+                    <td>增加</td>
+                    <td>编辑</td>
+             </tr>
+            {% endfor %}
+        </tbody></table>
+    {% endfor %}
+{% endblock %}
